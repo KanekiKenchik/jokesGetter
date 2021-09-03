@@ -18,10 +18,17 @@ class ViewController: UIViewController {
             let dictionary = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: Any]
             let setup = dictionary["setup"] ?? ""
             let delivery = dictionary["delivery"] ?? ""
-            self.label.text = setup as? String
-            self.label.text! += "\n\n\n\n"
-            self.label.text! += delivery as? String ?? ""
+            DispatchQueue.main.async {
+                self.displayJoke(setup: setup as! String, delivery: delivery as! String)
+            }
+            
         }.resume()
+    }
+    
+    private func displayJoke(setup: String, delivery: String) {
+        self.label.text = setup
+        self.label.text! += "\n\n\n\n"
+        self.label.text! += delivery
     }
 
     @IBOutlet weak var label: UILabel!
